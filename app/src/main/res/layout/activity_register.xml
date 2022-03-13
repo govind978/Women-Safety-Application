@@ -18,7 +18,7 @@
             android:id="@+id/tv_restAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ProjectGurukul Add Contact"
+            android:text="Add Contact"
             android:textAlignment="center"
             android:textColor="@color/textColor"
             android:textSize="24sp"

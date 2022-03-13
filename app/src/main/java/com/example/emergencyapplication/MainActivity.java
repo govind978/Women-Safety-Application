@@ -3,6 +3,7 @@ package com.example.emergencyapplication;
 import static android.Manifest.permission.CALL_PHONE;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,7 +41,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final Location TODO = null;
-    Button b1, b2, danger, accident;
+    Button b1, b2, danger, accident, hindi, english;
+    TextView tv_restAppBar;
     private FusedLocationProviderClient client;
     DatabaseHandler myDB;
     private static final int REQUEST_CHECK_CODE = 8989;
@@ -54,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static int i = 0;
 
+    ArrayList<String> hindiList = new ArrayList<>();
+    ArrayList<String> englishList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +68,35 @@ public class MainActivity extends AppCompatActivity {
         b1 = findViewById(R.id.button);
         b2 = findViewById(R.id.button2);
         myDB = new DatabaseHandler(this);
+        hindi = findViewById(R.id.hindi);
+        english = findViewById(R.id.english);
+        tv_restAppBar = findViewById(R.id.tv_restAppBar);
+
+        hindiList.add("संपर्क जोड़ें");
+        hindiList.add("आपातकालीन चोरी");
+        hindiList.add("आपातकालीन खतरा");
+        hindiList.add("आपातकालीन दुर्घटना");
+        hindiList.add("महिला सुरक्षा");
+
+        englishList.add("Add Contact");
+        englishList.add("Emergency Theft");
+        englishList.add("Emergency Danger");
+        englishList.add("Emergency Accident");
+        englishList.add("Women Safety");
+
+        hindi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLanguage(MainActivity.this, hindiList);
+            }
+        });
+
+        english.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLanguage(MainActivity.this, englishList);
+            }
+        });
 
         danger = findViewById(R.id.danger);
         accident = findViewById(R.id.accident);
@@ -105,15 +140,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void accident() {
-        loadData(101002);
+        loadData(101);
     }
 
     private void danger() {
-        loadData(100001);
+        loadData(100);
     }
 
     private void theft() {
-        loadData(100001);
+        loadData(100);
     }
 
     private void loadData(int call) {
@@ -157,6 +192,14 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(new String[]{CALL_PHONE}, 1);
             }
         }
+    }
+
+    public void setLanguage(Activity activity, ArrayList<String> language) {
+        b1.setText(language.get(0));
+        b2.setText(language.get(1));
+        danger.setText(language.get(2));
+        accident.setText(language.get(3));
+        tv_restAppBar.setText(language.get(4));
     }
 
     private void startTrack() {
